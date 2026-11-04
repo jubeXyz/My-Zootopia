@@ -18,18 +18,19 @@ for animal in animals_data:
     animal_type = animal.get("characteristics", {}).get("type")
 
     if name:
-        output += f"Name: {name}<br/>\n"
+        output += f'<div class="card__title">{name}</div>\n'
+        output += '<p class="card__text">\n'
 
     if diet:
-        output += f"Diet: {diet}<br/>\n"
+        output += f'<strong>Diet:</strong> {diet}<br/>\n'
 
     if locations:
-        output += f"Location: {locations[0]}<br/>\n"
+        output += f'<strong>Location:</strong> {locations[0]}<br/>\n'
 
     if animal_type:
-        output += f"Type: {animal_type}<br/>\n"
+        output += f'<strong>Type:</strong> {animal_type}<br/>\n'
 
-    output += "\n"
+    output += "</p>\n"
     output += "</li>\n"
 
 with open("animals_template.html", "r", encoding="utf-8") as file:
@@ -39,3 +40,4 @@ html = template.replace("__REPLACE_ANIMALS_INFO__", output)
 
 with open("animals.html", "w", encoding="utf-8") as file:
     file.write(html)
+    
