@@ -6,16 +6,15 @@ def load_data(file_path):
     with open(file_path, "r", encoding="utf-8") as handle:
         return json.load(handle)
 
-animals_data = load_data("animals_data.json")
 
-output = ""
+def serialize_animal(animal_obj):
+    output = ""
 
-for animal in animals_data:
     output += '<li class="cards__item">'
-    name = animal.get("name")
-    diet = animal.get("characteristics", {}).get("diet")
-    locations = animal.get("locations", [])
-    animal_type = animal.get("characteristics", {}).get("type")
+    name = animal_obj.get("name")
+    diet = animal_obj.get("characteristics", {}).get("diet")
+    locations = animal_obj.get("locations", [])
+    animal_type = animal_obj.get("characteristics", {}).get("type")
 
     if name:
         output += f'<div class="card__title">{name}</div>\n'
@@ -33,6 +32,17 @@ for animal in animals_data:
     output += "</p>\n"
     output += "</li>\n"
 
+    return output
+
+
+animals_data = load_data("animals_data.json")
+
+output = ""
+
+for animal in animals_data:
+    output += serialize_animal(animal)
+
+
 with open("animals_template.html", "r", encoding="utf-8") as file:
     template = file.read()
 
@@ -40,4 +50,3 @@ html = template.replace("__REPLACE_ANIMALS_INFO__", output)
 
 with open("animals.html", "w", encoding="utf-8") as file:
     file.write(html)
-    
